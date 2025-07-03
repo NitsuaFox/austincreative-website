@@ -28,23 +28,32 @@ export default function Home() {
       
       {/* Projects */}
       <div className="mb-12">
-        <div className="space-y-4">
-          <div className="flex justify-between items-center p-4 border-b border-gray-200">
+        {/* Headers */}
+        <div className="grid grid-cols-5 gap-4 p-4 border-b-2 border-gray-300 font-semibold text-black">
+          <div>Title</div>
+          <div>Category</div>
+          <div>Description</div>
+          <div>Date Added</div>
+          <div>URL</div>
+        </div>
+        
+        {/* Project List */}
+        <div className="space-y-0">
+          <div className="grid grid-cols-5 gap-4 p-4 border-b border-gray-200">
+            <div className="font-semibold text-black">Blockfall</div>
+            <div className="text-gray-600">Game</div>
+            <div className="text-gray-600">Puzzle game</div>
+            <div className="text-gray-600">2nd July 2025</div>
             <div>
-              <h3 className="font-semibold text-black">Blockfall</h3>
-              <div className="flex space-x-4 text-gray-600 text-sm">
-                <span>Game</span>
-                <span>2nd July 2025</span>
-              </div>
+              <a 
+                href="https://blockfall.austincreative.uk" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-black hover:text-gray-600 transition-colors"
+              >
+                Visit →
+              </a>
             </div>
-            <a 
-              href="https://blockfall.austincreative.uk" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-black hover:text-gray-600 transition-colors"
-            >
-              Visit →
-            </a>
           </div>
         </div>
       </div>
