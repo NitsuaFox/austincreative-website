@@ -25,10 +25,10 @@ export default function Music() {
           
           {/* Menu - Right */}
           <div className="flex space-x-8">
-            <Link href="/#projects" className="text-white hover:text-gray-400 transition-colors">PROJECTS</Link>
+            <Link href="/" className="text-white hover:text-gray-400 transition-colors">PROJECTS</Link>
             <Link href="/about" className="text-white hover:text-gray-400 transition-colors">ABOUT</Link>
             <Link href="/music" className="text-white hover:text-gray-400 transition-colors">MUSIC</Link>
-            <Link href="/#contact" className="text-white hover:text-gray-400 transition-colors">CONTACT</Link>
+            <Link href="/" className="text-white hover:text-gray-400 transition-colors">CONTACT</Link>
           </div>
         </nav>
         

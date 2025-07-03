@@ -23,10 +23,10 @@ export default function Home() {
           
           {/* Menu - Right */}
           <div className="flex space-x-8">
-            <a href="#projects" className="text-white hover:text-gray-400 transition-colors">PROJECTS</a>
+            <a href="#projects" className="text-white hover:text-gray-400 transition-colors" onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}>PROJECTS</a>
             <a href="/about" className="text-white hover:text-gray-400 transition-colors">ABOUT</a>
             <a href="/music" className="text-white hover:text-gray-400 transition-colors">MUSIC</a>
-            <a href="#contact" className="text-white hover:text-gray-400 transition-colors">CONTACT</a>
+            <a href="#contact" className="text-white hover:text-gray-400 transition-colors" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>CONTACT</a>
           </div>
         </nav>
         
@@ -51,7 +51,9 @@ export default function Home() {
       </div>
       
       {/* Projects */}
-      <ProjectList />
+      <div id="projects">
+        <ProjectList />
+      </div>
       
         {/* Copyright */}
         <div id="contact" className="text-center">
