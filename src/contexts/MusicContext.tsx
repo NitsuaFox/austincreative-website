@@ -39,6 +39,16 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const audioContextRef = useRef<AudioContext | null>(null)
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null)
   const animationRef = useRef<number>()
+  const initializedRef = useRef(false)
+
+  // Initialize True Love audio on mount
+  useEffect(() => {
+    if (!initializedRef.current) {
+      const audio = new Audio('/music/truelove.mp3')
+      audioRef.current = audio
+      initializedRef.current = true
+    }
+  }, [])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -167,6 +177,11 @@ export function MusicProvider({ children }: { children: ReactNode }) {
         audioContextRef.current.resume()
       }
       
+      // If no Web Audio setup exists yet, set it up
+      if (!analyserRef.current) {
+        setupAudioAnalysis()
+      }
+      
       audioRef.current.play().catch(console.error)
       setIsPlaying(true)
       
@@ -184,6 +199,55 @@ export function MusicProvider({ children }: { children: ReactNode }) {
         }
       }
       updateFrequencyData()
+    }
+  }
+
+  const setupAudioAnalysis = () => {
+    if (!audioRef.current) return
+    
+    try {
+      if (!audioContextRef.current) {
+        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      }
+      
+      // Resume context if suspended (required by browsers)
+      if (audioContextRef.current.state === 'suspended') {
+        audioContextRef.current.resume()
+      }
+      
+      if (!analyserRef.current) {
+        analyserRef.current = audioContextRef.current.createAnalyser()
+        analyserRef.current.fftSize = 128 // 64 frequency bins for better resolution
+        analyserRef.current.smoothingTimeConstant = 0.3 // Less smoothing for more responsiveness
+      }
+      
+      // Create source and connect to analyser
+      if (sourceRef.current) {
+        sourceRef.current.disconnect()
+      }
+      sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current)
+      sourceRef.current.connect(analyserRef.current)
+      analyserRef.current.connect(audioContextRef.current.destination)
+      
+      console.log('Web Audio API setup complete')
+      
+      // Start frequency data animation
+      const updateFrequencyData = () => {
+        if (analyserRef.current) {
+          const bufferLength = analyserRef.current.frequencyBinCount
+          const dataArray = new Uint8Array(bufferLength)
+          analyserRef.current.getByteFrequencyData(dataArray)
+          
+          // Convert to normalized array (0-1) and smooth the data
+          const normalizedData = Array.from(dataArray).map(value => value / 255)
+          setAudioData(normalizedData)
+          
+          animationRef.current = requestAnimationFrame(updateFrequencyData)
+        }
+      }
+      updateFrequencyData()
+    } catch (error) {
+      console.error('Web Audio API setup failed:', error)
     }
   }
 
