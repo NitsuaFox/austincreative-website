@@ -326,7 +326,7 @@ export default function WaveAnimation() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [])
+  }, [audioData, isPlaying])
 
   return (
     <div className="w-full h-full">
