@@ -28,7 +28,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
-  const [audioData, setAudioData] = useState<number[]>(new Array(32).fill(0))
+  const [audioData, setAudioData] = useState<number[]>(new Array(64).fill(0))
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
   const audioContextRef = useRef<AudioContext | null>(null)
@@ -88,8 +88,8 @@ export function MusicProvider({ children }: { children: ReactNode }) {
         
         if (!analyserRef.current) {
           analyserRef.current = audioContextRef.current.createAnalyser()
-          analyserRef.current.fftSize = 64 // 32 frequency bins
-          analyserRef.current.smoothingTimeConstant = 0.8
+          analyserRef.current.fftSize = 128 // 64 frequency bins for better resolution
+          analyserRef.current.smoothingTimeConstant = 0.3 // Less smoothing for more responsiveness
         }
         
         // Create source and connect to analyser
@@ -169,7 +169,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     setIsPlaying(false)
     setProgress(0)
     setDuration(0)
-    setAudioData(new Array(32).fill(0))
+    setAudioData(new Array(64).fill(0))
     
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current)
