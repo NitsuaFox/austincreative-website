@@ -35,7 +35,7 @@ export default function Home() {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold text-black mb-6">
-            Discover the magic of creation
+            AustinCreativeUK, personal website of Philip Austin
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
