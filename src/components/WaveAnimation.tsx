@@ -57,33 +57,31 @@ export default function WaveAnimation() {
       }
       
       // Detect when cursor crosses through wave lines
-      if (mousePos.isOver) {
-        const mouseDelta = Math.abs(newMousePos.x - lastMousePos.current.x)
-        const mouseSpeed = mouseDelta
-        
-        // Only pluck if mouse is moving with some speed
-        if (mouseSpeed > 2) {
-          waves.forEach((wave, waveIndex) => {
-            // Calculate where this wave would be at mouse X position
-            const waveY = canvas.offsetHeight / 2 + 
-                         wave.amplitude * Math.sin(wave.frequency * newMousePos.x + wave.offset) * 
-                         Math.sin(time * speed + wave.offset)
-            
-            // Check if cursor is near this wave line
-            const distanceToWave = Math.abs(newMousePos.y - waveY)
-            
-            if (distanceToWave < 15) { // Close enough to "pluck"
-              // Create a pluck effect
-              plucksRef.current.push({
-                x: newMousePos.x,
-                waveIndex,
-                amplitude: (mouseSpeed * 0.5 + 10) * wave.sensitivity,
-                time: 0,
-                decay: 0.95
-              })
-            }
-          })
-        }
+      const mouseDelta = Math.abs(newMousePos.x - lastMousePos.current.x)
+      const mouseSpeed = mouseDelta
+      
+      // Only pluck if mouse is moving with some speed
+      if (mouseSpeed > 2) {
+        waves.forEach((wave, waveIndex) => {
+          // Calculate where this wave would be at mouse X position
+          const waveY = canvas.offsetHeight / 2 + 
+                       wave.amplitude * Math.sin(wave.frequency * newMousePos.x + wave.offset) * 
+                       Math.sin(time * speed + wave.offset)
+          
+          // Check if cursor is near this wave line
+          const distanceToWave = Math.abs(newMousePos.y - waveY)
+          
+          if (distanceToWave < 15) { // Close enough to "pluck"
+            // Create a pluck effect
+            plucksRef.current.push({
+              x: newMousePos.x,
+              waveIndex,
+              amplitude: (mouseSpeed * 0.5 + 10) * wave.sensitivity,
+              time: 0,
+              decay: 0.95
+            })
+          }
+        })
       }
       
       lastMousePos.current = { x: newMousePos.x, y: newMousePos.y }
@@ -172,7 +170,7 @@ export default function WaveAnimation() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [mousePos])
+  }, [])
 
   return (
     <div className="w-full h-20 my-8">
