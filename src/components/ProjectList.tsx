@@ -24,13 +24,6 @@ const projects: Project[] = [
     description: "Educational math game",
     date: "June 2023",
     url: "https://philipaustin.itch.io/island-maths"
-  },
-  {
-    title: "Print Excellent",
-    category: "Shop",
-    description: "Etsy 3D Print Shop",
-    date: "1st June 2019",
-    url: "https://www.etsy.com/shop/PrintExcellent"
   }
 ]
 
