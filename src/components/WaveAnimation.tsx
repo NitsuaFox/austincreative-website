@@ -276,11 +276,18 @@ export default function WaveAnimation() {
             const freqPosition = (x / width) * (wave.freqRange[1] - wave.freqRange[0]) + wave.freqRange[0]
             const freqIndex = Math.floor(freqPosition)
             if (freqIndex < audioData.length) {
-              const freqStrength = audioData[freqIndex] || 0
+              // Smooth interpolation between frequency bins to avoid jumps
+              const freqStrength1 = audioData[freqIndex] || 0
+              const freqStrength2 = audioData[Math.min(freqIndex + 1, audioData.length - 1)] || 0
+              const t = freqPosition - freqIndex
+              const smoothFreqStrength = freqStrength1 * (1 - t) + freqStrength2 * t
+              
               // Layer audio effect on top of base wave, don't replace it
               // Make bass more prominent and responsive
               const responsiveness = waveIndex === 0 ? 0.8 : 0.5 // Bass wave gets higher responsiveness
-              y += freqStrength * audioInfluence * Math.sin(time * 0.05 + x * 0.02) * responsiveness
+              // Use smoother sine wave modulation to avoid harsh transitions
+              const audioEffect = smoothFreqStrength * audioInfluence * Math.sin(time * 0.02 + x * 0.005) * responsiveness * 0.3
+              y += audioEffect
             }
           }
           
