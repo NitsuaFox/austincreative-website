@@ -221,8 +221,8 @@ export default function WaveAnimation() {
           dot.vy = Math.min(dot.vy, -1) // Ensure upward velocity
         }
         
-        // Cull dots that are off screen
-        return dot.x > -20 && dot.x < width + 20 && dot.y < height + 50
+        // Cull dots that are off screen (more generous bounds for full-screen)
+        return dot.x > -50 && dot.x < width + 50 && dot.y < height + 100
       })
       
       // Draw multiple wave layers
@@ -306,7 +306,7 @@ export default function WaveAnimation() {
   }, [])
 
   return (
-    <div className="w-full h-20 my-8">
+    <div className="w-full h-full">
       <canvas
         ref={canvasRef}
         className="w-full h-full"
