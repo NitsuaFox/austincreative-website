@@ -36,7 +36,7 @@ export default function Music() {
             <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">PROJECTS</button>
             <Link href="/about" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">ABOUT</Link>
             <Link href="/music" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">MUSIC</Link>
-            <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">CONTACT</button>
+            <Link href="/contact" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">CONTACT</Link>
           </div>
           
           {/* Mobile Hamburger Button */}
