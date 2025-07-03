@@ -24,6 +24,7 @@ export default function Home() {
           <div className="flex space-x-8">
             <a href="#projects" className="text-white hover:text-gray-400 transition-colors">PROJECTS</a>
             <a href="/about" className="text-white hover:text-gray-400 transition-colors">ABOUT</a>
+            <a href="/music" className="text-white hover:text-gray-400 transition-colors">MUSIC</a>
             <a href="#contact" className="text-white hover:text-gray-400 transition-colors">CONTACT</a>
           </div>
         </nav>
