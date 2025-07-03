@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import WaveAnimation from '../components/WaveAnimation'
 
 export default function Home() {
   return (
@@ -15,6 +16,9 @@ export default function Home() {
           />
         </div>
       </div>
+      
+      {/* Wave Animation */}
+      <WaveAnimation />
       
       {/* Intro */}
       <div className="text-center mb-12">
