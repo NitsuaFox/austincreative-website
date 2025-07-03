@@ -5,9 +5,9 @@ export default function Home() {
     <main className="min-h-screen bg-white p-8 max-w-4xl mx-auto">
       {/* Logo */}
       <div className="text-center mb-8">
-        <div className="w-48 h-48 mx-auto mb-4 relative">
+        <div className="w-64 h-64 mx-auto mb-4 relative">
           <Image
-            src="/logo2.png"
+            src="/logo4.png"
             alt="Austin Creative Logo"
             fill
             className="object-contain"
