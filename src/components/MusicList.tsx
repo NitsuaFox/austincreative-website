@@ -30,7 +30,7 @@ const songs: Song[] = [
     artist: "Philip Austin",
     remixed: true,
     date: "10th Nov 2010",
-    filename: "sunshine.mp3"
+    filename: "Sunshine.mp3"
   }
 ]
 
