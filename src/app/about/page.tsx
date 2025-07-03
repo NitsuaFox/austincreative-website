@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import MusicPlayerOverlay from '../../components/MusicPlayerOverlay'
 import WaveAnimation from '../../components/WaveAnimation'
+import Footer from '../../components/Footer'
 
 export default function About() {
   const router = useRouter()
@@ -105,6 +106,8 @@ export default function About() {
           </div>
         </div>
         </div>
+        
+        <Footer />
       </div>
     </main>
   )

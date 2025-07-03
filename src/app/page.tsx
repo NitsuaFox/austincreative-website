@@ -5,6 +5,7 @@ import { useState } from 'react'
 import WaveAnimation from '../components/WaveAnimation'
 import ProjectList from '../components/ProjectList'
 import MusicPlayerOverlay from '../components/MusicPlayerOverlay'
+import Footer from '../components/Footer'
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -81,16 +82,12 @@ export default function Home() {
       <div id="projects">
         <ProjectList />
       </div>
-      
-        {/* Copyright */}
-        <div id="contact" className="text-center">
-          <div className="flex justify-center">
-            <span className="text-gray-400">
-              AustinCreative.uk © 2010-2025
-            </span>
-          </div>
         </div>
-        </div>
+        
+        {/* Contact anchor for smooth scrolling */}
+        <div id="contact"></div>
+        
+        <Footer />
       </div>
     </main>
   )

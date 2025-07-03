@@ -7,6 +7,7 @@ import { useState } from 'react'
 import MusicList from '../../components/MusicList'
 import MusicPlayerOverlay from '../../components/MusicPlayerOverlay'
 import WaveAnimation from '../../components/WaveAnimation'
+import Footer from '../../components/Footer'
 
 export default function Music() {
   const router = useRouter()
@@ -85,6 +86,8 @@ export default function Music() {
           {/* Music List */}
           <MusicList />
         </div>
+        
+        <Footer />
       </div>
     </main>
   )
