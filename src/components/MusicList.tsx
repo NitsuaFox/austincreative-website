@@ -24,6 +24,13 @@ const songs: Song[] = [
     remixed: true,
     date: "1st June 2025",
     filename: "spanishgirl.mp3"
+  },
+  {
+    title: "Sunshine",
+    artist: "Philip Austin",
+    remixed: true,
+    date: "10th Nov 2010",
+    filename: "sunshine.mp3"
   }
 ]
 
@@ -76,9 +83,17 @@ export default function MusicList() {
               <div>
                 <button
                   onClick={() => handlePlayPause(song)}
-                  className="bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition-colors font-semibold"
+                  className="w-10 h-10 rounded-full border border-white text-white hover:bg-white hover:text-black transition-all duration-200 flex items-center justify-center"
                 >
-                  {isCurrentSong(song.filename) && isPlaying ? '⏸️ Pause' : '▶️ Play'}
+                  {isCurrentSong(song.filename) && isPlaying ? (
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>
@@ -91,9 +106,17 @@ export default function MusicList() {
               <div>
                 <button
                   onClick={() => handlePlayPause(song)}
-                  className="bg-white text-black px-2 py-1 rounded hover:bg-gray-200 transition-colors font-semibold text-sm"
+                  className="w-8 h-8 rounded-full border border-white text-white hover:bg-white hover:text-black transition-all duration-200 flex items-center justify-center"
                 >
-                  {isCurrentSong(song.filename) && isPlaying ? '⏸️' : '▶️'}
+                  {isCurrentSong(song.filename) && isPlaying ? (
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                    </svg>
+                  ) : (
+                    <svg className="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>
