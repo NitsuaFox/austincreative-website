@@ -66,62 +66,45 @@ export default function Home() {
             Featured Projects
           </h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Blockfall Project */}
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">Project Image</span>
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-6">
+              {/* Blockfall Project */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-black mb-2">Blockfall</h3>
+                  <p className="text-gray-600">An engaging puzzle game built with modern web technologies.</p>
+                </div>
+                <div className="mt-4 md:mt-0 md:ml-6">
+                  <a 
+                    href="https://blockfall.austincreative.uk" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-black font-semibold hover:text-gray-600 transition-colors"
+                  >
+                    blockfall.austincreative.uk
+                  </a>
+                </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-black mb-2">Blockfall</h3>
-                <p className="text-gray-600 mb-4">
-                  An engaging puzzle game built with modern web technologies.
-                </p>
-                <a 
-                  href="https://blockfall.austincreative.uk" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-black font-semibold hover:text-gray-600 transition-colors"
-                >
-                  Visit Project →
-                </a>
-              </div>
-            </div>
 
-            {/* Placeholder Projects */}
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">Project Image</span>
+              {/* Placeholder Projects */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-black mb-2">Project Two</h3>
+                  <p className="text-gray-600">Description of your next amazing project.</p>
+                </div>
+                <div className="mt-4 md:mt-0 md:ml-6">
+                  <span className="text-gray-400">Coming Soon</span>
+                </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-black mb-2">Project Two</h3>
-                <p className="text-gray-600 mb-4">
-                  Description of your next amazing project.
-                </p>
-                <a 
-                  href="#" 
-                  className="inline-flex items-center text-black font-semibold hover:text-gray-600 transition-colors"
-                >
-                  Coming Soon →
-                </a>
-              </div>
-            </div>
 
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <div className="h-48 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">Project Image</span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-black mb-2">Project Three</h3>
-                <p className="text-gray-600 mb-4">
-                  Another creative project showcase.
-                </p>
-                <a 
-                  href="#" 
-                  className="inline-flex items-center text-black font-semibold hover:text-gray-600 transition-colors"
-                >
-                  Coming Soon →
-                </a>
+              <div className="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-black mb-2">Project Three</h3>
+                  <p className="text-gray-600">Another creative project showcase.</p>
+                </div>
+                <div className="mt-4 md:mt-0 md:ml-6">
+                  <span className="text-gray-400">Coming Soon</span>
+                </div>
               </div>
             </div>
           </div>
