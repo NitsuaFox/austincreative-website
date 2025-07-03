@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import WaveAnimation from '../components/WaveAnimation'
 import ProjectList from '../components/ProjectList'
@@ -8,6 +10,7 @@ import MusicPlayerOverlay from '../components/MusicPlayerOverlay'
 import Footer from '../components/Footer'
 
 export default function Home() {
+  const router = useRouter()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <main className="min-h-screen bg-gray-800">
@@ -29,9 +32,9 @@ export default function Home() {
           {/* Desktop Menu - Right */}
           <div className="hidden md:flex space-x-4 text-base">
             <button onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2">PROJECTS</button>
-            <a href="/about" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2 block">ABOUT</a>
-            <a href="/music" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2 block">MUSIC</a>
-            <button onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2">CONTACT</button>
+            <Link href="/about" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2 block">ABOUT</Link>
+            <Link href="/music" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2 block">MUSIC</Link>
+            <Link href="/contact" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2 block">CONTACT</Link>
           </div>
           
           {/* Mobile Hamburger Button */}
@@ -50,9 +53,9 @@ export default function Home() {
           <div className="md:hidden bg-gray-900 border-t border-gray-600">
             <div className="flex flex-col p-4">
               <button onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }} className="text-white hover:text-gray-400 transition-colors text-left py-3 px-2">PROJECTS</button>
-              <a href="/about" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>ABOUT</a>
-              <a href="/music" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>MUSIC</a>
-              <a href="/contact" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>CONTACT</a>
+              <Link href="/about" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>ABOUT</Link>
+              <Link href="/music" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>MUSIC</Link>
+              <Link href="/contact" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>CONTACT</Link>
             </div>
           </div>
         )}
