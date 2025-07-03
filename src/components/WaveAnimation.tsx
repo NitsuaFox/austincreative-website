@@ -61,13 +61,13 @@ export default function WaveAnimation() {
     let time = 0
     const speed = 0.03
 
-    // Multiple wave layers with different colors and properties
+    // Multiple wave layers with different colors and properties - each wave gets its own frequency band
     const waves = [
-      { amplitude: 12, frequency: 0.02, color: '#FF6B6B', opacity: 0.7, offset: 0, sensitivity: 1.2, freqRange: [0, 8] },
-      { amplitude: 8, frequency: 0.025, color: '#4ECDC4', opacity: 0.6, offset: Math.PI / 3, sensitivity: 0.8, freqRange: [8, 16] },
-      { amplitude: 15, frequency: 0.015, color: '#45B7D1', opacity: 0.5, offset: Math.PI / 2, sensitivity: 1.5, freqRange: [16, 32] },
-      { amplitude: 10, frequency: 0.03, color: '#96CEB4', opacity: 0.6, offset: Math.PI, sensitivity: 1.0, freqRange: [32, 48] },
-      { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9, freqRange: [48, 64] }
+      { amplitude: 12, frequency: 0.02, color: '#FF6B6B', opacity: 0.7, offset: 0, sensitivity: 1.2, freqRange: [0, 12] },       // Red - Deep bass & bass
+      { amplitude: 8, frequency: 0.025, color: '#4ECDC4', opacity: 0.6, offset: Math.PI / 3, sensitivity: 0.8, freqRange: [12, 24] },  // Teal - Low-mid
+      { amplitude: 15, frequency: 0.015, color: '#45B7D1', opacity: 0.5, offset: Math.PI / 2, sensitivity: 1.5, freqRange: [24, 36] }, // Blue - Mid
+      { amplitude: 10, frequency: 0.03, color: '#96CEB4', opacity: 0.6, offset: Math.PI, sensitivity: 1.0, freqRange: [36, 48] },      // Green - High-mid
+      { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9, freqRange: [48, 64] } // Yellow - Highs
     ]
 
     // Mouse tracking with pluck detection
@@ -253,13 +253,13 @@ export default function WaveAnimation() {
           for (let i = startFreq; i < Math.min(endFreq, audioData.length); i++) {
             sum += audioData[i]
           }
-          // Scale influence differently for different frequency ranges - boost bass and highs
+          // Scale influence for each dedicated frequency range - boost sensitivity
           let baseScale
-          if (waveIndex === 0) baseScale = 100 // Red wave (bass) - much higher
-          else if (waveIndex === 1) baseScale = 80  // Teal wave (low-mid)
-          else if (waveIndex === 2) baseScale = 70  // Blue wave (mid)
-          else if (waveIndex === 3) baseScale = 90  // Green wave (high-mid)
-          else baseScale = 120 // Yellow wave (highs) - highest
+          if (waveIndex === 0) baseScale = 150 // Red wave (deep bass & bass) - very high
+          else if (waveIndex === 1) baseScale = 120  // Teal wave (low-mid) - high
+          else if (waveIndex === 2) baseScale = 100  // Blue wave (mid) - medium-high
+          else if (waveIndex === 3) baseScale = 130  // Green wave (high-mid) - high
+          else baseScale = 140 // Yellow wave (highs) - very high
           
           audioInfluence = (sum / (endFreq - startFreq)) * baseScale
         }
@@ -285,8 +285,8 @@ export default function WaveAnimation() {
               // Layer audio effect on top of base wave, don't replace it
               // Make bass more prominent and responsive
               const responsiveness = waveIndex === 0 ? 0.8 : 0.5 // Bass wave gets higher responsiveness
-              // Use smoother sine wave modulation to avoid harsh transitions
-              const audioEffect = smoothFreqStrength * audioInfluence * Math.sin(time * 0.02 + x * 0.005) * responsiveness * 0.3
+              // Use smoother sine wave modulation to avoid harsh transitions - increase sensitivity
+              const audioEffect = smoothFreqStrength * audioInfluence * Math.sin(time * 0.02 + x * 0.005) * responsiveness * 0.6
               y += audioEffect
             }
           }
