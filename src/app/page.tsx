@@ -20,7 +20,7 @@ export default function Home() {
         {/* Menu - Right */}
         <div className="flex space-x-8">
           <a href="#projects" className="text-white hover:text-gray-400 transition-colors">Projects</a>
-          <a href="#about" className="text-white hover:text-gray-400 transition-colors">About</a>
+          <a href="/about" className="text-white hover:text-gray-400 transition-colors">About</a>
           <a href="#contact" className="text-white hover:text-gray-400 transition-colors">Contact</a>
         </div>
       </nav>
@@ -81,6 +81,23 @@ export default function Home() {
             </div>
           </div>
           
+          <div className="hidden md:grid grid-cols-5 gap-4 p-4 border-b border-gray-700">
+            <div className="font-semibold text-white">Island Maths</div>
+            <div className="text-gray-400">Game</div>
+            <div className="text-gray-400">Educational math game</div>
+            <div className="text-gray-400">June 2023</div>
+            <div>
+              <a 
+                href="https://philipaustin.itch.io/island-maths" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:text-gray-400 transition-colors"
+              >
+                Visit →
+              </a>
+            </div>
+          </div>
+          
           {/* Mobile Layout */}
           <div className="md:hidden grid grid-cols-4 gap-4 p-4 border-b border-gray-700">
             <div className="font-semibold text-white">Blockfall</div>
@@ -89,6 +106,22 @@ export default function Home() {
             <div>
               <a 
                 href="https://blockfall.austincreative.uk" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:text-gray-400 transition-colors"
+              >
+                Visit →
+              </a>
+            </div>
+          </div>
+          
+          <div className="md:hidden grid grid-cols-4 gap-4 p-4 border-b border-gray-700">
+            <div className="font-semibold text-white">Island Maths</div>
+            <div className="text-gray-400">Game</div>
+            <div className="text-gray-400 text-sm">June 2023</div>
+            <div>
+              <a 
+                href="https://philipaustin.itch.io/island-maths" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-white hover:text-gray-400 transition-colors"
