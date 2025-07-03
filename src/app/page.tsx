@@ -3,24 +3,11 @@ import Image from 'next/image'
 export default function Home() {
   return (
     <main className="min-h-screen bg-white p-8 max-w-4xl mx-auto">
-      {/* Top Left Logo */}
-      <div className="absolute top-4 left-4">
-        <div className="w-12 h-12 relative">
+      {/* Logo */}
+      <div className="text-center mb-8">
+        <div className="w-48 h-48 mx-auto mb-4 relative">
           <Image
             src="/logo2.png"
-            alt="Austin Creative Logo"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
-      </div>
-      
-      {/* Center Logo */}
-      <div className="text-center mb-8">
-        <div className="w-32 h-32 mx-auto mb-4 relative">
-          <Image
-            src="/logo.png"
             alt="Austin Creative Logo"
             fill
             className="object-contain"
