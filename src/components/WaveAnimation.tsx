@@ -63,11 +63,11 @@ export default function WaveAnimation() {
 
     // Multiple wave layers with different colors and properties - each wave gets its own frequency band
     const waves = [
-      { amplitude: 12, frequency: 0.02, color: '#FF6B6B', opacity: 0.7, offset: 0, sensitivity: 1.2, freqRange: [0, 12] },       // Red - Deep bass & bass
-      { amplitude: 8, frequency: 0.025, color: '#4ECDC4', opacity: 0.6, offset: Math.PI / 3, sensitivity: 0.8, freqRange: [12, 24] },  // Teal - Low-mid
+      { amplitude: 12, frequency: 0.02, color: '#FF6B6B', opacity: 0.7, offset: 0, sensitivity: 1.2, freqRange: [48, 64] },       // Red - Highs
+      { amplitude: 8, frequency: 0.025, color: '#4ECDC4', opacity: 0.6, offset: Math.PI / 3, sensitivity: 0.8, freqRange: [36, 48] },  // Teal - High-mid
       { amplitude: 15, frequency: 0.015, color: '#45B7D1', opacity: 0.5, offset: Math.PI / 2, sensitivity: 1.5, freqRange: [24, 36] }, // Blue - Mid
-      { amplitude: 10, frequency: 0.03, color: '#96CEB4', opacity: 0.6, offset: Math.PI, sensitivity: 1.0, freqRange: [36, 48] },      // Green - High-mid
-      { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9, freqRange: [48, 64] } // Yellow - Highs
+      { amplitude: 10, frequency: 0.03, color: '#96CEB4', opacity: 0.6, offset: Math.PI, sensitivity: 1.0, freqRange: [12, 24] },      // Green - Low-mid
+      { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9, freqRange: [0, 12] } // Yellow - BASS!
     ]
 
     // Mouse tracking with pluck detection
@@ -255,11 +255,11 @@ export default function WaveAnimation() {
           }
           // Scale influence for each dedicated frequency range - boost sensitivity
           let baseScale
-          if (waveIndex === 0) baseScale = 150 // Red wave (deep bass & bass) - very high
-          else if (waveIndex === 1) baseScale = 120  // Teal wave (low-mid) - high
+          if (waveIndex === 0) baseScale = 140 // Red wave (highs) - high
+          else if (waveIndex === 1) baseScale = 130  // Teal wave (high-mid) - high
           else if (waveIndex === 2) baseScale = 100  // Blue wave (mid) - medium-high
-          else if (waveIndex === 3) baseScale = 130  // Green wave (high-mid) - high
-          else baseScale = 140 // Yellow wave (highs) - very high
+          else if (waveIndex === 3) baseScale = 120  // Green wave (low-mid) - high
+          else baseScale = 200 // Yellow wave (BASS) - MAXIMUM!
           
           audioInfluence = (sum / (endFreq - startFreq)) * baseScale
         }
