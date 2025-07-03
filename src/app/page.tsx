@@ -23,7 +23,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Main logo/image */}
           <div className="mb-8">
-            <div className="w-48 h-48 mx-auto mb-8 relative">
+            <div className="w-64 h-64 md:w-80 md:h-80 mx-auto mb-8 relative">
               <Image
                 src="/logo.png"
                 alt="Austin Creative Logo"
