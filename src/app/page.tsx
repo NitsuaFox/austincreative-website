@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import WaveAnimation from '../components/WaveAnimation'
 import ProjectList from '../components/ProjectList'
+import MusicPlayerOverlay from '../components/MusicPlayerOverlay'
 
 export default function Home() {
   return (
@@ -28,6 +29,9 @@ export default function Home() {
             <a href="#contact" className="text-white hover:text-gray-400 transition-colors">CONTACT</a>
           </div>
         </nav>
+        
+        {/* Music Player */}
+        <MusicPlayerOverlay />
         
         {/* Content */}
         <div className="p-8">
