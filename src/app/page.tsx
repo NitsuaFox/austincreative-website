@@ -3,36 +3,34 @@ import WaveAnimation from '../components/WaveAnimation'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white relative">
-      {/* Full-screen Wave Animation Background */}
-      <div className="fixed inset-0 z-0">
+    <main className="min-h-screen bg-white p-8 max-w-4xl mx-auto">
+      {/* Logo */}
+      <div className="text-center mb-8">
+        <div className="w-64 h-64 mx-auto mb-4 relative">
+          <Image
+            src="/logo4.png"
+            alt="Austin Creative Logo"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+      </div>
+      
+      {/* Wave Animation */}
+      <div className="w-full h-32 mb-8">
         <WaveAnimation />
       </div>
       
-      {/* Content Overlay */}
-      <div className="relative z-10 p-8 max-w-4xl mx-auto">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="w-64 h-64 mx-auto mb-4 relative">
-            <Image
-              src="/logo4.png"
-              alt="Austin Creative Logo"
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
-        </div>
-        
-        {/* Intro */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-black mb-4">
-            Hello, I&apos;m Phil
-          </h1>
-          <p className="text-gray-600">
-            In my spare time, I freelance, and make stuff, check out my creations below
-          </p>
-        </div>
+      {/* Intro */}
+      <div className="text-center mb-12">
+        <h1 className="text-3xl font-bold text-black mb-4">
+          Hello, I&apos;m Phil
+        </h1>
+        <p className="text-gray-600">
+          In my spare time, I freelance, and make stuff, check out my creations below
+        </p>
+      </div>
       
       {/* Projects */}
       <div className="mb-12">
@@ -102,7 +100,6 @@ export default function Home() {
             Email
           </a>
         </div>
-      </div>
       </div>
     </main>
   )
