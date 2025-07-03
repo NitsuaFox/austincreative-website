@@ -3,27 +3,37 @@ import WaveAnimation from '../components/WaveAnimation'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black p-8 max-w-4xl mx-auto">
-      {/* Logo */}
-      <div className="text-center">
-        <div className="w-64 h-64 mx-auto relative">
+    <main className="min-h-screen bg-black">
+      {/* Hero Navigation Bar */}
+      <nav className="flex items-center justify-between p-6 max-w-7xl mx-auto">
+        {/* Logo - Left */}
+        <div className="w-16 h-16 relative">
           <Image
-            src="/logo6.png"
+            src="/logo7.png"
             alt="Austin Creative Logo"
             fill
             className="object-contain"
             priority
           />
         </div>
-      </div>
+        
+        {/* Menu - Right */}
+        <div className="flex space-x-8">
+          <a href="#projects" className="text-white hover:text-gray-400 transition-colors">Projects</a>
+          <a href="#about" className="text-white hover:text-gray-400 transition-colors">About</a>
+          <a href="#contact" className="text-white hover:text-gray-400 transition-colors">Contact</a>
+        </div>
+      </nav>
       
-      {/* Wave Animation */}
-      <div className="w-full h-32 mb-8">
-        <WaveAnimation />
-      </div>
+      {/* Content */}
+      <div className="p-8 max-w-4xl mx-auto">
+        {/* Wave Animation */}
+        <div className="w-full h-32 mb-8">
+          <WaveAnimation />
+        </div>
       
       {/* Intro */}
-      <div className="text-center mb-12">
+      <div id="about" className="text-center mb-12">
         <h1 className="text-3xl font-bold text-white mb-4">
           Hello, I&apos;m Phil
         </h1>
@@ -33,7 +43,7 @@ export default function Home() {
       </div>
       
       {/* Projects */}
-      <div className="mb-12">
+      <div id="projects" className="mb-12">
         {/* Headers - Desktop */}
         <div className="hidden md:grid grid-cols-5 gap-4 p-4 border-b-2 border-gray-600 font-semibold text-white">
           <div>Title</div>
@@ -91,7 +101,7 @@ export default function Home() {
       </div>
       
       {/* Links */}
-      <div className="text-center">
+      <div id="contact" className="text-center">
         <div className="flex justify-center">
           <a 
             href="mailto:hello@austincreative.uk" 
@@ -100,6 +110,7 @@ export default function Home() {
             Email
           </a>
         </div>
+      </div>
       </div>
     </main>
   )
