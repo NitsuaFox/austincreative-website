@@ -2,157 +2,69 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="font-bold text-xl text-black">Austin Creative</div>
-            <div className="hidden md:flex space-x-8">
-              <a href="#home" className="text-black hover:text-gray-600 transition-colors">Home</a>
-              <a href="#projects" className="text-black hover:text-gray-600 transition-colors">Projects</a>
-              <a href="#about" className="text-black hover:text-gray-600 transition-colors">About</a>
-              <a href="#contact" className="text-black hover:text-gray-600 transition-colors">Contact</a>
-            </div>
-          </div>
+    <main className="min-h-screen bg-white p-8 max-w-4xl mx-auto">
+      {/* Logo */}
+      <div className="text-center mb-8">
+        <div className="w-32 h-32 mx-auto mb-4 relative">
+          <Image
+            src="/logo.png"
+            alt="Austin Creative Logo"
+            fill
+            className="object-contain"
+            priority
+          />
         </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section id="home" className="pt-16 min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Main logo/image */}
-          <div className="mb-8">
-            <div className="w-64 h-64 md:w-80 md:h-80 mx-auto mb-8 relative">
-              <Image
-                src="/logo.png"
-                alt="Austin Creative Logo"
-                fill
-                className="object-contain"
-                priority
-              />
+      </div>
+      
+      {/* Intro */}
+      <div className="text-center mb-12">
+        <h1 className="text-3xl font-bold text-black mb-4">
+          Hello, I&apos;m Phil
+        </h1>
+        <p className="text-gray-600">
+          Here&apos;s some stuff I made
+        </p>
+      </div>
+      
+      {/* Projects */}
+      <div className="mb-12">
+        <div className="space-y-4">
+          <div className="flex justify-between items-center p-4 border-b border-gray-200">
+            <div>
+              <h3 className="font-semibold text-black">Blockfall</h3>
+              <p className="text-gray-600 text-sm">Puzzle game</p>
             </div>
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl font-bold text-black mb-6">
-            AustinCreativeUK, personal website of Philip Austin
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            Boundless creativity, unique digital experiences
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="#projects" 
-              className="bg-black text-white px-8 py-4 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
+              href="https://blockfall.austincreative.uk" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-black hover:text-gray-600 transition-colors"
             >
-              View My Projects
-            </a>
-            <a 
-              href="#about" 
-              className="border-2 border-black text-black px-8 py-4 rounded-lg hover:bg-black hover:text-white transition-colors font-semibold"
-            >
-              About Me
+              Visit →
             </a>
           </div>
         </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-16">
-            Featured Projects
-          </h2>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-6">
-              {/* Blockfall Project */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-black mb-2">Blockfall</h3>
-                  <p className="text-gray-600">An engaging puzzle game built with modern web technologies.</p>
-                </div>
-                <div className="mt-4 md:mt-0 md:ml-6">
-                  <a 
-                    href="https://blockfall.austincreative.uk" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-black font-semibold hover:text-gray-600 transition-colors"
-                  >
-                    blockfall.austincreative.uk
-                  </a>
-                </div>
-              </div>
-
-              {/* Placeholder Projects */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-black mb-2">Project Two</h3>
-                  <p className="text-gray-600">Description of your next amazing project.</p>
-                </div>
-                <div className="mt-4 md:mt-0 md:ml-6">
-                  <span className="text-gray-400">Coming Soon</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col md:flex-row md:items-center justify-between p-6 bg-white rounded-lg hover:bg-gray-50 transition-colors">
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-black mb-2">Project Three</h3>
-                  <p className="text-gray-600">Another creative project showcase.</p>
-                </div>
-                <div className="mt-4 md:mt-0 md:ml-6">
-                  <span className="text-gray-400">Coming Soon</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-8">
-            About Austin Creative
-          </h2>
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-            I&apos;m a creative developer and designer passionate about building unique digital experiences. 
-            With a focus on clean design and innovative technology, I create projects that blend 
-            artistry with functionality.
-          </p>
-          <p className="text-lg text-gray-600 leading-relaxed">
-            From interactive games to web applications, I enjoy exploring the intersection of 
-            creativity and code to bring ideas to life.
-          </p>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-8">
-            Get In Touch
-          </h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Interested in working together or have a project in mind?
-          </p>
+      </div>
+      
+      {/* Links */}
+      <div className="text-center">
+        <div className="flex justify-center space-x-6">
           <a 
             href="mailto:hello@austincreative.uk" 
-            className="bg-black text-white px-8 py-4 rounded-lg hover:bg-gray-800 transition-colors font-semibold inline-block"
+            className="text-black hover:text-gray-600 transition-colors"
           >
-            Say Hello
+            Email
+          </a>
+          <a 
+            href="https://github.com/nitsuafox" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-black hover:text-gray-600 transition-colors"
+          >
+            GitHub
           </a>
         </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; 2024 Austin Creative UK. All rights reserved.</p>
-        </div>
-      </footer>
+      </div>
     </main>
   )
 }
