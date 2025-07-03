@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import MusicList from '../../components/MusicList'
+import MusicPlayerOverlay from '../../components/MusicPlayerOverlay'
 
 export default function Music() {
   return (
@@ -30,6 +31,9 @@ export default function Music() {
             <Link href="/#contact" className="text-white hover:text-gray-400 transition-colors">CONTACT</Link>
           </div>
         </nav>
+        
+        {/* Music Player */}
+        <MusicPlayerOverlay />
         
         {/* Content */}
         <div className="p-8">
