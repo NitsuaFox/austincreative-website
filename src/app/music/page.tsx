@@ -1,10 +1,14 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import MusicList from '../../components/MusicList'
 import MusicPlayerOverlay from '../../components/MusicPlayerOverlay'
 import WaveAnimation from '../../components/WaveAnimation'
 
 export default function Music() {
+  const router = useRouter()
   return (
     <main className="min-h-screen bg-gray-800">
       {/* Content Container */}
@@ -26,10 +30,10 @@ export default function Music() {
           
           {/* Menu - Right */}
           <div className="flex space-x-2 md:space-x-8 text-xs md:text-base">
-            <Link href="/" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">PROJECTS</Link>
+            <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">PROJECTS</button>
             <Link href="/about" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">ABOUT</Link>
             <Link href="/music" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">MUSIC</Link>
-            <Link href="/" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">CONTACT</Link>
+            <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">CONTACT</button>
           </div>
         </nav>
         
