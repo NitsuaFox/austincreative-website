@@ -3,30 +3,32 @@ import WaveAnimation from '../components/WaveAnimation'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black">
-      {/* Hero Navigation Bar */}
-      <nav className="flex items-center justify-between p-6 max-w-7xl mx-auto">
-        {/* Logo - Left */}
-        <div className="w-40 h-40 relative">
-          <Image
-            src="/logo7.png"
-            alt="Austin Creative Logo"
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
+    <main className="min-h-screen bg-gray-800">
+      {/* Content Container */}
+      <div className="max-w-4xl mx-auto bg-black min-h-screen">
+        {/* Hero Navigation Bar */}
+        <nav className="flex items-center justify-between p-6">
+          {/* Logo - Left */}
+          <div className="w-40 h-40 relative">
+            <Image
+              src="/logo7.png"
+              alt="Austin Creative Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          
+          {/* Menu - Right */}
+          <div className="flex space-x-8">
+            <a href="#projects" className="text-white hover:text-gray-400 transition-colors">Projects</a>
+            <a href="/about" className="text-white hover:text-gray-400 transition-colors">About</a>
+            <a href="#contact" className="text-white hover:text-gray-400 transition-colors">Contact</a>
+          </div>
+        </nav>
         
-        {/* Menu - Right */}
-        <div className="flex space-x-8">
-          <a href="#projects" className="text-white hover:text-gray-400 transition-colors">Projects</a>
-          <a href="/about" className="text-white hover:text-gray-400 transition-colors">About</a>
-          <a href="#contact" className="text-white hover:text-gray-400 transition-colors">Contact</a>
-        </div>
-      </nav>
-      
-      {/* Content */}
-      <div className="p-8 max-w-4xl mx-auto">
+        {/* Content */}
+        <div className="p-8">
         {/* Wave Animation */}
         <div className="w-full h-32 mb-8">
           <WaveAnimation />
@@ -133,17 +135,18 @@ export default function Home() {
         </div>
       </div>
       
-      {/* Links */}
-      <div id="contact" className="text-center">
-        <div className="flex justify-center">
-          <a 
-            href="mailto:hello@austincreative.uk" 
-            className="text-white hover:text-gray-400 transition-colors"
-          >
-            Email
-          </a>
+        {/* Links */}
+        <div id="contact" className="text-center">
+          <div className="flex justify-center">
+            <a 
+              href="mailto:hello@austincreative.uk" 
+              className="text-white hover:text-gray-400 transition-colors"
+            >
+              Email
+            </a>
+          </div>
         </div>
-      </div>
+        </div>
       </div>
     </main>
   )

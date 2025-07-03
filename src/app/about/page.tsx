@@ -3,32 +3,34 @@ import Link from 'next/link'
 
 export default function About() {
   return (
-    <main className="min-h-screen bg-black">
-      {/* Hero Navigation Bar */}
-      <nav className="flex items-center justify-between p-6 max-w-7xl mx-auto">
-        {/* Logo - Left */}
-        <Link href="/">
-          <div className="w-40 h-40 relative cursor-pointer">
-            <Image
-              src="/logo7.png"
-              alt="Austin Creative Logo"
-              fill
-              className="object-contain"
-              priority
-            />
+    <main className="min-h-screen bg-gray-800">
+      {/* Content Container */}
+      <div className="max-w-4xl mx-auto bg-black min-h-screen">
+        {/* Hero Navigation Bar */}
+        <nav className="flex items-center justify-between p-6">
+          {/* Logo - Left */}
+          <Link href="/">
+            <div className="w-40 h-40 relative cursor-pointer">
+              <Image
+                src="/logo7.png"
+                alt="Austin Creative Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </Link>
+          
+          {/* Menu - Right */}
+          <div className="flex space-x-8">
+            <Link href="/#projects" className="text-white hover:text-gray-400 transition-colors">Projects</Link>
+            <Link href="/about" className="text-white hover:text-gray-400 transition-colors">About</Link>
+            <Link href="/#contact" className="text-white hover:text-gray-400 transition-colors">Contact</Link>
           </div>
-        </Link>
+        </nav>
         
-        {/* Menu - Right */}
-        <div className="flex space-x-8">
-          <Link href="/#projects" className="text-white hover:text-gray-400 transition-colors">Projects</Link>
-          <Link href="/about" className="text-white hover:text-gray-400 transition-colors">About</Link>
-          <Link href="/#contact" className="text-white hover:text-gray-400 transition-colors">Contact</Link>
-        </div>
-      </nav>
-      
-      {/* Content */}
-      <div className="p-8 max-w-4xl mx-auto">
+        {/* Content */}
+        <div className="p-8">
         {/* About Content */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-white mb-8">
@@ -62,6 +64,7 @@ export default function About() {
               View My Projects
             </Link>
           </div>
+        </div>
         </div>
       </div>
     </main>
