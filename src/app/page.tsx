@@ -32,15 +32,16 @@ export default function Home() {
           </div>
         </nav>
         
+        {/* Wave Animation - Fixed Height */}
+        <div className="w-full h-32">
+          <WaveAnimation />
+        </div>
+        
         {/* Music Player */}
         <MusicPlayerOverlay />
         
         {/* Content */}
         <div className="p-8">
-        {/* Wave Animation */}
-        <div className="w-full h-32 mb-8">
-          <WaveAnimation />
-        </div>
       
       {/* Intro */}
       <div id="about" className="text-center mb-12">

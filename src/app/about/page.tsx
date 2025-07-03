@@ -32,13 +32,13 @@ export default function About() {
           </div>
         </nav>
         
-        {/* Music Player */}
-        <MusicPlayerOverlay />
-        
-        {/* Wave Animation */}
-        <div className="w-full h-32 px-8">
+        {/* Wave Animation - Fixed Height */}
+        <div className="w-full h-32">
           <WaveAnimation />
         </div>
+        
+        {/* Music Player */}
+        <MusicPlayerOverlay />
         
         {/* Content */}
         <div className="p-8">
