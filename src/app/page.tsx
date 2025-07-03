@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import WaveAnimation from '../components/WaveAnimation'
 import ProjectList from '../components/ProjectList'
