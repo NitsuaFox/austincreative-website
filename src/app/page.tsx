@@ -7,7 +7,7 @@ export default function Home() {
       {/* Hero Navigation Bar */}
       <nav className="flex items-center justify-between p-6 max-w-7xl mx-auto">
         {/* Logo - Left */}
-        <div className="w-24 h-24 relative">
+        <div className="w-40 h-40 relative">
           <Image
             src="/logo7.png"
             alt="Austin Creative Logo"
