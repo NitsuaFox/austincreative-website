@@ -8,7 +8,7 @@ export default function Home() {
       <div className="text-center mb-8">
         <div className="w-64 h-64 mx-auto mb-4 relative">
           <Image
-            src="/logo5.png"
+            src="/logo6.png"
             alt="Austin Creative Logo"
             fill
             className="object-contain"
