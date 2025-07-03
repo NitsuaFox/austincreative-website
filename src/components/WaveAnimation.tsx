@@ -265,7 +265,7 @@ export default function WaveAnimation() {
         }
         
         // Create smooth wave with pluck effects and audio reactivity
-        for (let x = 0; x <= width; x += 2) {
+        for (let x = 0; x <= width; x += 1) {
           // Base wave animation (always present)
           let y = height / 2 + 
                   wave.amplitude * Math.sin(wave.frequency * x + wave.offset) * 
