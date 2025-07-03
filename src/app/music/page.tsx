@@ -32,11 +32,11 @@ export default function Music() {
           </Link>
           
           {/* Desktop Menu - Right */}
-          <div className="hidden md:flex space-x-8 text-base">
-            <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">PROJECTS</button>
-            <Link href="/about" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">ABOUT</Link>
-            <Link href="/music" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">MUSIC</Link>
-            <Link href="/contact" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">CONTACT</Link>
+          <div className="hidden md:flex space-x-4 text-base">
+            <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2">PROJECTS</button>
+            <Link href="/about" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2 block">ABOUT</Link>
+            <Link href="/music" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2 block">MUSIC</Link>
+            <Link href="/contact" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap px-3 py-2 block">CONTACT</Link>
           </div>
           
           {/* Mobile Hamburger Button */}
@@ -53,11 +53,11 @@ export default function Music() {
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-gray-900 border-t border-gray-600">
-            <div className="flex flex-col space-y-4 p-4">
-              <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100); setMobileMenuOpen(false); }} className="text-white hover:text-gray-400 transition-colors text-left">PROJECTS</button>
-              <Link href="/about" className="text-white hover:text-gray-400 transition-colors" onClick={() => setMobileMenuOpen(false)}>ABOUT</Link>
-              <Link href="/music" className="text-white hover:text-gray-400 transition-colors" onClick={() => setMobileMenuOpen(false)}>MUSIC</Link>
-              <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100); setMobileMenuOpen(false); }} className="text-white hover:text-gray-400 transition-colors text-left">CONTACT</button>
+            <div className="flex flex-col p-4">
+              <button onClick={() => { router.push('/'); setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100); setMobileMenuOpen(false); }} className="text-white hover:text-gray-400 transition-colors text-left py-3 px-2">PROJECTS</button>
+              <Link href="/about" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>ABOUT</Link>
+              <Link href="/music" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>MUSIC</Link>
+              <Link href="/contact" className="text-white hover:text-gray-400 transition-colors py-3 px-2 block" onClick={() => setMobileMenuOpen(false)}>CONTACT</Link>
             </div>
           </div>
         )}
