@@ -21,10 +21,16 @@ export default function Home() {
       {/* Hero Section */}
       <section id="home" className="pt-16 min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Placeholder for main logo/image */}
+          {/* Main logo/image */}
           <div className="mb-8">
-            <div className="w-48 h-48 mx-auto bg-black rounded-full flex items-center justify-center mb-8">
-              <span className="text-white text-2xl font-bold">LOGO</span>
+            <div className="w-48 h-48 mx-auto mb-8 relative">
+              <Image
+                src="/logo.png"
+                alt="Austin Creative Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
           
