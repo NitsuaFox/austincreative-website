@@ -32,7 +32,10 @@ export default function Home() {
           <div className="flex justify-between items-center p-4 border-b border-gray-200">
             <div>
               <h3 className="font-semibold text-black">Blockfall</h3>
-              <p className="text-gray-600 text-sm">Puzzle game</p>
+              <div className="flex space-x-4 text-gray-600 text-sm">
+                <span>Game</span>
+                <span>2nd July 2025</span>
+              </div>
             </div>
             <a 
               href="https://blockfall.austincreative.uk" 
