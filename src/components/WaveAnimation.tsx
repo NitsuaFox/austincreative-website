@@ -10,11 +10,22 @@ interface Pluck {
   decay: number
 }
 
+interface Dot {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  color: string
+  size: number
+  gravity: number
+}
+
 export default function WaveAnimation() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, isOver: false })
   const plucksRef = useRef<Pluck[]>([])
+  const dotsRef = useRef<Dot[]>([])
   const lastMousePos = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -92,8 +103,30 @@ export default function WaveAnimation() {
       setMousePos(prev => ({ ...prev, isOver: false }))
     }
 
+    const handleClick = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      const clickX = e.clientX - rect.left
+      const clickY = e.clientY - rect.top
+      
+      // Random color from wave colors
+      const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7']
+      const randomColor = colors[Math.floor(Math.random() * colors.length)]
+      
+      // Create a new dot
+      dotsRef.current.push({
+        x: clickX,
+        y: clickY,
+        vx: (Math.random() - 0.5) * 2, // Small random horizontal velocity
+        vy: Math.random() * -2 - 1, // Initial upward velocity
+        color: randomColor,
+        size: 4 + Math.random() * 4, // Random size between 4-8px
+        gravity: 0.1 + Math.random() * 0.05 // Slight gravity variation
+      })
+    }
+
     canvas.addEventListener('mousemove', handleMouseMove)
     canvas.addEventListener('mouseleave', handleMouseLeave)
+    canvas.addEventListener('click', handleClick)
 
     const animate = () => {
       const width = canvas.offsetWidth
@@ -107,6 +140,34 @@ export default function WaveAnimation() {
         pluck.time += 1
         pluck.amplitude *= pluck.decay
         return pluck.amplitude > 0.5 // Remove very small plucks
+      })
+      
+      // Update dots physics
+      dotsRef.current = dotsRef.current.filter(dot => {
+        // Apply gravity
+        dot.vy += dot.gravity
+        
+        // Update position
+        dot.x += dot.vx
+        dot.y += dot.vy
+        
+        // Calculate wave height at dot's X position for collision detection
+        let waveHeightAtDot = height / 2
+        waves.forEach(wave => {
+          const waveY = wave.amplitude * Math.sin(wave.frequency * dot.x + wave.offset) * 
+                       Math.sin(time * speed + wave.offset)
+          waveHeightAtDot += waveY
+        })
+        
+        // Check collision with waves (bounce off them)
+        if (dot.y >= waveHeightAtDot - dot.size / 2) {
+          dot.y = waveHeightAtDot - dot.size / 2
+          dot.vy = -Math.abs(dot.vy) * 0.6 // Bounce with some energy loss
+          dot.vx *= 0.95 // Slight friction
+        }
+        
+        // Cull dots that are off screen
+        return dot.x > -20 && dot.x < width + 20 && dot.y < height + 20
       })
       
       // Draw multiple wave layers
@@ -151,6 +212,22 @@ export default function WaveAnimation() {
         ctx.stroke()
       })
       
+      // Draw dots
+      dotsRef.current.forEach(dot => {
+        ctx.beginPath()
+        ctx.fillStyle = dot.color
+        ctx.globalAlpha = 0.8
+        ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2)
+        ctx.fill()
+        
+        // Add a subtle glow effect
+        ctx.beginPath()
+        ctx.fillStyle = dot.color
+        ctx.globalAlpha = 0.3
+        ctx.arc(dot.x, dot.y, dot.size + 2, 0, Math.PI * 2)
+        ctx.fill()
+      })
+      
       // Reset alpha
       ctx.globalAlpha = 1
       
@@ -166,6 +243,7 @@ export default function WaveAnimation() {
       window.removeEventListener('resize', resizeCanvas)
       canvas.removeEventListener('mousemove', handleMouseMove)
       canvas.removeEventListener('mouseleave', handleMouseLeave)
+      canvas.removeEventListener('click', handleClick)
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
