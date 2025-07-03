@@ -48,15 +48,12 @@ export default function Home() {
       {/* Projects */}
       <ProjectList />
       
-        {/* Links */}
+        {/* Copyright */}
         <div id="contact" className="text-center">
           <div className="flex justify-center">
-            <a 
-              href="mailto:hello@austincreative.uk" 
-              className="text-white hover:text-gray-400 transition-colors"
-            >
-              Email
-            </a>
+            <span className="text-gray-400">
+              AustinCreative.uk © 2010-2025
+            </span>
           </div>
         </div>
         </div>
