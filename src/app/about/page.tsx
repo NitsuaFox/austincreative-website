@@ -63,7 +63,7 @@ export default function About() {
           
           <div className="mt-12">
             <Link 
-              href="/#projects" 
+              href="/" 
               className="bg-white text-black px-8 py-4 rounded-lg hover:bg-gray-200 transition-colors font-semibold inline-block"
             >
               View My Projects

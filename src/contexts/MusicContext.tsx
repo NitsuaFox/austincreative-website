@@ -63,6 +63,23 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     }
   }, [currentSong])
 
+  // Handle page visibility changes to resume audio context
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && audioContextRef.current && audioContextRef.current.state === 'suspended' && isPlaying) {
+        audioContextRef.current.resume()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('focus', handleVisibilityChange)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('focus', handleVisibilityChange)
+    }
+  }, [isPlaying])
+
   const playSong = (song: Song) => {
     if (audioRef.current) {
       audioRef.current.pause()
@@ -140,6 +157,11 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   const resumeSong = () => {
     if (audioRef.current && currentSong) {
+      // Resume audio context if suspended
+      if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
+        audioContextRef.current.resume()
+      }
+      
       audioRef.current.play().catch(console.error)
       setIsPlaying(true)
       
