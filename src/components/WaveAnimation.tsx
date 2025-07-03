@@ -120,7 +120,7 @@ export default function WaveAnimation() {
         vy: Math.random() * -2 - 1, // Initial upward velocity
         color: randomColor,
         size: 4 + Math.random() * 4, // Random size between 4-8px
-        gravity: 0.1 + Math.random() * 0.05 // Slight gravity variation
+        gravity: 0.3 + Math.random() * 0.1 // Increased gravity
       })
     }
 
@@ -144,6 +144,9 @@ export default function WaveAnimation() {
       
       // Update dots physics
       dotsRef.current = dotsRef.current.filter(dot => {
+        // Store previous position for collision detection
+        const prevY = dot.y
+        
         // Apply gravity
         dot.vy += dot.gravity
         
@@ -151,7 +154,7 @@ export default function WaveAnimation() {
         dot.x += dot.vx
         dot.y += dot.vy
         
-        // Calculate wave height at dot's X position for collision detection
+        // Calculate wave height at dot's current X position
         let waveHeightAtDot = height / 2
         waves.forEach(wave => {
           const waveY = wave.amplitude * Math.sin(wave.frequency * dot.x + wave.offset) * 
@@ -159,15 +162,36 @@ export default function WaveAnimation() {
           waveHeightAtDot += waveY
         })
         
-        // Check collision with waves (bounce off them)
-        if (dot.y >= waveHeightAtDot - dot.size / 2) {
+        // Enhanced collision detection - prevent passing through waves
+        const dotBottom = dot.y + dot.size / 2
+        const dotTop = dot.y - dot.size / 2
+        
+        // Check if dot is crossing through or below the wave surface
+        if (dotBottom >= waveHeightAtDot) {
+          // If the dot was above the wave in the previous frame and is now below,
+          // it's trying to pass through - place it exactly on the surface
+          if (prevY + dot.size / 2 < waveHeightAtDot) {
+            dot.y = waveHeightAtDot - dot.size / 2
+            dot.vy = -Math.abs(dot.vy) * 0.7 // Bounce with energy loss
+            dot.vx *= 0.9 // Friction when bouncing
+          } else {
+            // Dot is resting on or sliding along the wave
+            dot.y = waveHeightAtDot - dot.size / 2
+            if (dot.vy > 0) { // Only reverse if moving downward
+              dot.vy = -Math.abs(dot.vy) * 0.7
+            }
+            dot.vx *= 0.95 // Slight friction when on surface
+          }
+        }
+        
+        // Additional check: if dot somehow gets below the wave, force it back up
+        if (dot.y + dot.size / 2 > waveHeightAtDot) {
           dot.y = waveHeightAtDot - dot.size / 2
-          dot.vy = -Math.abs(dot.vy) * 0.6 // Bounce with some energy loss
-          dot.vx *= 0.95 // Slight friction
+          dot.vy = Math.min(dot.vy, -1) // Ensure upward velocity
         }
         
         // Cull dots that are off screen
-        return dot.x > -20 && dot.x < width + 20 && dot.y < height + 20
+        return dot.x > -20 && dot.x < width + 20 && dot.y < height + 50
       })
       
       // Draw multiple wave layers
