@@ -96,7 +96,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       
       // Start frequency data animation
       const updateFrequencyData = () => {
-        if (analyserRef.current && isPlaying) {
+        if (analyserRef.current) {
           const bufferLength = analyserRef.current.frequencyBinCount
           const dataArray = new Uint8Array(bufferLength)
           analyserRef.current.getByteFrequencyData(dataArray)
@@ -133,7 +133,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       
       // Resume frequency data animation
       const updateFrequencyData = () => {
-        if (analyserRef.current && isPlaying) {
+        if (analyserRef.current) {
           const bufferLength = analyserRef.current.frequencyBinCount
           const dataArray = new Uint8Array(bufferLength)
           analyserRef.current.getByteFrequencyData(dataArray)
