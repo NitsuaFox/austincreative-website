@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black p-8 max-w-4xl mx-auto">
       {/* Logo */}
-      <div className="text-center mb-4">
-        <div className="w-64 h-64 mx-auto mb-2 relative">
+      <div className="text-center">
+        <div className="w-64 h-64 mx-auto relative">
           <Image
             src="/logo6.png"
             alt="Austin Creative Logo"
