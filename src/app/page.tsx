@@ -26,14 +26,14 @@ export default function Home() {
           Hello, I&apos;m Phil
         </h1>
         <p className="text-gray-600">
-          Here&apos;s some stuff I made
+          In my spare time, I freelance, and make stuff, check out my creations below
         </p>
       </div>
       
       {/* Projects */}
       <div className="mb-12">
-        {/* Headers */}
-        <div className="grid grid-cols-5 gap-4 p-4 border-b-2 border-gray-300 font-semibold text-black">
+        {/* Headers - Desktop */}
+        <div className="hidden md:grid grid-cols-5 gap-4 p-4 border-b-2 border-gray-300 font-semibold text-black">
           <div>Title</div>
           <div>Category</div>
           <div>Description</div>
@@ -41,13 +41,39 @@ export default function Home() {
           <div>URL</div>
         </div>
         
+        {/* Headers - Mobile */}
+        <div className="md:hidden grid grid-cols-4 gap-4 p-4 border-b-2 border-gray-300 font-semibold text-black">
+          <div>Title</div>
+          <div>Category</div>
+          <div>Date</div>
+          <div>URL</div>
+        </div>
+        
         {/* Project List */}
         <div className="space-y-0">
-          <div className="grid grid-cols-5 gap-4 p-4 border-b border-gray-200">
+          {/* Desktop Layout */}
+          <div className="hidden md:grid grid-cols-5 gap-4 p-4 border-b border-gray-200">
             <div className="font-semibold text-black">Blockfall</div>
             <div className="text-gray-600">Game</div>
             <div className="text-gray-600">Puzzle game</div>
             <div className="text-gray-600">2nd July 2025</div>
+            <div>
+              <a 
+                href="https://blockfall.austincreative.uk" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-black hover:text-gray-600 transition-colors"
+              >
+                Visit →
+              </a>
+            </div>
+          </div>
+          
+          {/* Mobile Layout */}
+          <div className="md:hidden grid grid-cols-4 gap-4 p-4 border-b border-gray-200">
+            <div className="font-semibold text-black">Blockfall</div>
+            <div className="text-gray-600">Game</div>
+            <div className="text-gray-600 text-sm">2nd July 2025</div>
             <div>
               <a 
                 href="https://blockfall.austincreative.uk" 
@@ -64,20 +90,12 @@ export default function Home() {
       
       {/* Links */}
       <div className="text-center">
-        <div className="flex justify-center space-x-6">
+        <div className="flex justify-center">
           <a 
             href="mailto:hello@austincreative.uk" 
             className="text-black hover:text-gray-600 transition-colors"
           >
             Email
-          </a>
-          <a 
-            href="https://github.com/nitsuafox" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-black hover:text-gray-600 transition-colors"
-          >
-            GitHub
           </a>
         </div>
       </div>
