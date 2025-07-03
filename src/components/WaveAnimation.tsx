@@ -29,6 +29,16 @@ export default function WaveAnimation() {
   const dotsRef = useRef<Dot[]>([])
   const lastMousePos = useRef({ x: 0, y: 0 })
   const { audioData, isPlaying } = useMusic()
+  
+  // Debug audio data
+  useEffect(() => {
+    if (isPlaying && audioData.length > 0) {
+      const maxValue = Math.max(...audioData)
+      if (maxValue > 0.01) {
+        console.log('Audio data detected:', maxValue, audioData.slice(0, 5))
+      }
+    }
+  }, [audioData, isPlaying])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -243,22 +253,26 @@ export default function WaveAnimation() {
           for (let i = startFreq; i < Math.min(endFreq, audioData.length); i++) {
             sum += audioData[i]
           }
-          audioInfluence = sum / (endFreq - startFreq) * 30 // Scale the influence
+          // Scale influence differently for different frequency ranges
+          const baseScale = waveIndex < 2 ? 40 : 60 // Higher scale for yellow/green waves
+          audioInfluence = sum / (endFreq - startFreq) * baseScale
         }
         
         // Create smooth wave with pluck effects and audio reactivity
         for (let x = 0; x <= width; x += 2) {
+          // Base wave animation (always present)
           let y = height / 2 + 
                   wave.amplitude * Math.sin(wave.frequency * x + wave.offset) * 
                   Math.sin(time * speed + wave.offset)
           
-          // Add audio reactivity - make each frequency band affect different parts of the wave
+          // Add audio reactivity on top of base animation - make each frequency band affect different parts of the wave
           if (audioInfluence > 0) {
             const freqPosition = (x / width) * (wave.freqRange[1] - wave.freqRange[0]) + wave.freqRange[0]
             const freqIndex = Math.floor(freqPosition)
             if (freqIndex < audioData.length) {
               const freqStrength = audioData[freqIndex] || 0
-              y += freqStrength * audioInfluence * Math.sin(time * 0.1 + x * 0.01)
+              // Layer audio effect on top of base wave, don't replace it
+              y += freqStrength * audioInfluence * Math.sin(time * 0.05 + x * 0.02) * 0.3
             }
           }
           

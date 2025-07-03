@@ -75,43 +75,55 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     setProgress(0)
     
     // Set up Web Audio API for frequency analysis
-    try {
-      if (!audioContextRef.current) {
-        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
-      }
-      
-      if (!analyserRef.current) {
-        analyserRef.current = audioContextRef.current.createAnalyser()
-        analyserRef.current.fftSize = 64 // 32 frequency bins
-        analyserRef.current.smoothingTimeConstant = 0.8
-      }
-      
-      // Create source and connect to analyser
-      if (sourceRef.current) {
-        sourceRef.current.disconnect()
-      }
-      sourceRef.current = audioContextRef.current.createMediaElementSource(audio)
-      sourceRef.current.connect(analyserRef.current)
-      analyserRef.current.connect(audioContextRef.current.destination)
-      
-      // Start frequency data animation
-      const updateFrequencyData = () => {
-        if (analyserRef.current) {
-          const bufferLength = analyserRef.current.frequencyBinCount
-          const dataArray = new Uint8Array(bufferLength)
-          analyserRef.current.getByteFrequencyData(dataArray)
-          
-          // Convert to normalized array (0-1) and smooth the data
-          const normalizedData = Array.from(dataArray).map(value => value / 255)
-          setAudioData(normalizedData)
-          
-          animationRef.current = requestAnimationFrame(updateFrequencyData)
+    const setupAudioAnalysis = () => {
+      try {
+        if (!audioContextRef.current) {
+          audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
         }
+        
+        // Resume context if suspended (required by browsers)
+        if (audioContextRef.current.state === 'suspended') {
+          audioContextRef.current.resume()
+        }
+        
+        if (!analyserRef.current) {
+          analyserRef.current = audioContextRef.current.createAnalyser()
+          analyserRef.current.fftSize = 64 // 32 frequency bins
+          analyserRef.current.smoothingTimeConstant = 0.8
+        }
+        
+        // Create source and connect to analyser
+        if (sourceRef.current) {
+          sourceRef.current.disconnect()
+        }
+        sourceRef.current = audioContextRef.current.createMediaElementSource(audio)
+        sourceRef.current.connect(analyserRef.current)
+        analyserRef.current.connect(audioContextRef.current.destination)
+        
+        console.log('Web Audio API setup complete')
+        
+        // Start frequency data animation
+        const updateFrequencyData = () => {
+          if (analyserRef.current) {
+            const bufferLength = analyserRef.current.frequencyBinCount
+            const dataArray = new Uint8Array(bufferLength)
+            analyserRef.current.getByteFrequencyData(dataArray)
+            
+            // Convert to normalized array (0-1) and smooth the data
+            const normalizedData = Array.from(dataArray).map(value => value / 255)
+            setAudioData(normalizedData)
+            
+            animationRef.current = requestAnimationFrame(updateFrequencyData)
+          }
+        }
+        updateFrequencyData()
+      } catch (error) {
+        console.error('Web Audio API setup failed:', error)
       }
-      updateFrequencyData()
-    } catch (error) {
-      console.error('Web Audio API setup failed:', error)
     }
+    
+    // Set up audio analysis after audio starts playing
+    audio.addEventListener('canplay', setupAudioAnalysis, { once: true })
     
     audio.play().catch(console.error)
   }
