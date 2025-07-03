@@ -154,13 +154,44 @@ export default function WaveAnimation() {
         dot.x += dot.vx
         dot.y += dot.vy
         
-        // Calculate wave height at dot's current X position
+        // Calculate wave height at dot's current X position including pluck effects
         let waveHeightAtDot = height / 2
-        waves.forEach(wave => {
-          const waveY = wave.amplitude * Math.sin(wave.frequency * dot.x + wave.offset) * 
-                       Math.sin(time * speed + wave.offset)
+        let totalWaveForce = 0
+        
+        waves.forEach((wave, waveIndex) => {
+          let waveY = wave.amplitude * Math.sin(wave.frequency * dot.x + wave.offset) * 
+                     Math.sin(time * speed + wave.offset)
+          
+          // Add pluck effects to this wave
+          let pluckEffect = 0
+          plucksRef.current.forEach(pluck => {
+            if (pluck.waveIndex === waveIndex) {
+              const distanceFromPluck = Math.abs(dot.x - pluck.x)
+              const maxDistance = 100
+              
+              if (distanceFromPluck < maxDistance) {
+                const influence = (maxDistance - distanceFromPluck) / maxDistance
+                const vibration = pluck.amplitude * influence * 
+                                Math.sin(pluck.time * 0.3) * 
+                                Math.exp(-distanceFromPluck * 0.02)
+                pluckEffect += vibration
+                
+                // Calculate force from pluck vibration on dot
+                const pluckForce = vibration * influence * 0.05
+                totalWaveForce += pluckForce
+              }
+            }
+          })
+          
+          waveY += pluckEffect
           waveHeightAtDot += waveY
         })
+        
+        // Apply wave forces to dot velocity (pluck effects push dots around)
+        if (Math.abs(totalWaveForce) > 0.1) {
+          dot.vy += totalWaveForce * 0.3 // Vertical force from wave vibrations
+          dot.vx += totalWaveForce * 0.1 // Small horizontal force too
+        }
         
         // Enhanced collision detection - prevent passing through waves
         const dotBottom = dot.y + dot.size / 2
