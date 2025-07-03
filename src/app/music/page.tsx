@@ -9,10 +9,10 @@ export default function Music() {
       {/* Content Container */}
       <div className="max-w-4xl mx-auto bg-black min-h-screen">
         {/* Hero Navigation Bar */}
-        <nav className="flex items-center justify-between p-6">
+        <nav className="flex items-center justify-between p-4 md:p-6">
           {/* Logo - Left */}
           <Link href="/">
-            <div className="w-40 h-40 relative cursor-pointer">
+            <div className="w-24 h-24 md:w-40 md:h-40 relative cursor-pointer flex-shrink-0">
               <Image
                 src="/logo7.png"
                 alt="Austin Creative Logo"
@@ -24,11 +24,11 @@ export default function Music() {
           </Link>
           
           {/* Menu - Right */}
-          <div className="flex space-x-8">
-            <Link href="/" className="text-white hover:text-gray-400 transition-colors">PROJECTS</Link>
-            <Link href="/about" className="text-white hover:text-gray-400 transition-colors">ABOUT</Link>
-            <Link href="/music" className="text-white hover:text-gray-400 transition-colors">MUSIC</Link>
-            <Link href="/" className="text-white hover:text-gray-400 transition-colors">CONTACT</Link>
+          <div className="flex space-x-2 md:space-x-8 text-xs md:text-base">
+            <Link href="/" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">PROJECTS</Link>
+            <Link href="/about" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">ABOUT</Link>
+            <Link href="/music" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">MUSIC</Link>
+            <Link href="/" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">CONTACT</Link>
           </div>
         </nav>
         

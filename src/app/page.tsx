@@ -9,9 +9,9 @@ export default function Home() {
       {/* Content Container */}
       <div className="max-w-4xl mx-auto bg-black min-h-screen">
         {/* Hero Navigation Bar */}
-        <nav className="flex items-center justify-between p-6">
+        <nav className="flex items-center justify-between p-4 md:p-6">
           {/* Logo - Left */}
-          <div className="w-40 h-40 relative">
+          <div className="w-24 h-24 md:w-40 md:h-40 relative flex-shrink-0">
             <Image
               src="/logo7.png"
               alt="Austin Creative Logo"
@@ -22,11 +22,11 @@ export default function Home() {
           </div>
           
           {/* Menu - Right */}
-          <div className="flex space-x-8">
-            <a href="#projects" className="text-white hover:text-gray-400 transition-colors" onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}>PROJECTS</a>
-            <a href="/about" className="text-white hover:text-gray-400 transition-colors">ABOUT</a>
-            <a href="/music" className="text-white hover:text-gray-400 transition-colors">MUSIC</a>
-            <a href="#contact" className="text-white hover:text-gray-400 transition-colors" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>CONTACT</a>
+          <div className="flex space-x-2 md:space-x-8 text-xs md:text-base">
+            <a href="#projects" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap" onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}>PROJECTS</a>
+            <a href="/about" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">ABOUT</a>
+            <a href="/music" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap">MUSIC</a>
+            <a href="#contact" className="text-white hover:text-gray-400 transition-colors whitespace-nowrap" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>CONTACT</a>
           </div>
         </nav>
         
