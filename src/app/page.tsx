@@ -129,7 +129,7 @@ export default function Home() {
             About Austin Creative
           </h2>
           <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-            I'm a creative developer and designer passionate about building unique digital experiences. 
+            I&apos;m a creative developer and designer passionate about building unique digital experiences. 
             With a focus on clean design and innovative technology, I create projects that blend 
             artistry with functionality.
           </p>
