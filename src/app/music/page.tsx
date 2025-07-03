@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import MusicList from '../../components/MusicList'
 import MusicPlayerOverlay from '../../components/MusicPlayerOverlay'
+import WaveAnimation from '../../components/WaveAnimation'
 
 export default function Music() {
   return (
@@ -34,6 +35,11 @@ export default function Music() {
         
         {/* Music Player */}
         <MusicPlayerOverlay />
+        
+        {/* Wave Animation */}
+        <div className="w-full h-32 px-8">
+          <WaveAnimation />
+        </div>
         
         {/* Content */}
         <div className="p-8">

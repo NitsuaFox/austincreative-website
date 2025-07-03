@@ -24,7 +24,12 @@ interface MusicContextType {
 const MusicContext = createContext<MusicContextType | undefined>(undefined)
 
 export function MusicProvider({ children }: { children: ReactNode }) {
-  const [currentSong, setCurrentSong] = useState<Song | null>(null)
+  // Initialize with True Love queued up
+  const [currentSong, setCurrentSong] = useState<Song | null>({
+    title: "True Love",
+    artist: "Philip Austin",
+    filename: "truelove.mp3"
+  })
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
