@@ -61,13 +61,13 @@ export default function WaveAnimation() {
     let time = 0
     const speed = 0.03
 
-    // Multiple wave layers with different colors and properties
+    // Multiple wave layers with different colors and properties - spread like a proper equalizer
     const waves = [
-      { amplitude: 12, frequency: 0.02, color: '#FF6B6B', opacity: 0.7, offset: 0, sensitivity: 1.2, freqRange: [0, 8] },
-      { amplitude: 8, frequency: 0.025, color: '#4ECDC4', opacity: 0.6, offset: Math.PI / 3, sensitivity: 0.8, freqRange: [8, 16] },
-      { amplitude: 15, frequency: 0.015, color: '#45B7D1', opacity: 0.5, offset: Math.PI / 2, sensitivity: 1.5, freqRange: [16, 32] },
-      { amplitude: 10, frequency: 0.03, color: '#96CEB4', opacity: 0.6, offset: Math.PI, sensitivity: 1.0, freqRange: [32, 48] },
-      { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9, freqRange: [48, 64] }
+      { amplitude: 12, frequency: 0.02, color: '#FF6B6B', opacity: 0.7, offset: 0, sensitivity: 1.2, freqRange: [0, 4] },     // Deep bass
+      { amplitude: 8, frequency: 0.025, color: '#4ECDC4', opacity: 0.6, offset: Math.PI / 3, sensitivity: 0.8, freqRange: [4, 8] },   // Bass
+      { amplitude: 15, frequency: 0.015, color: '#45B7D1', opacity: 0.5, offset: Math.PI / 2, sensitivity: 1.5, freqRange: [8, 16] }, // Low-mid
+      { amplitude: 10, frequency: 0.03, color: '#96CEB4', opacity: 0.6, offset: Math.PI, sensitivity: 1.0, freqRange: [16, 32] },      // Mid
+      { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9, freqRange: [0, 16] } // Yellow gets bass+low-mid for movement
     ]
 
     // Mouse tracking with pluck detection
@@ -253,13 +253,13 @@ export default function WaveAnimation() {
           for (let i = startFreq; i < Math.min(endFreq, audioData.length); i++) {
             sum += audioData[i]
           }
-          // Scale influence differently for different frequency ranges - boost bass and highs
+          // Scale influence for proper equalizer distribution
           let baseScale
-          if (waveIndex === 0) baseScale = 100 // Red wave (bass) - much higher
-          else if (waveIndex === 1) baseScale = 80  // Teal wave (low-mid)
-          else if (waveIndex === 2) baseScale = 70  // Blue wave (mid)
-          else if (waveIndex === 3) baseScale = 90  // Green wave (high-mid)
-          else baseScale = 120 // Yellow wave (highs) - highest
+          if (waveIndex === 0) baseScale = 120 // Red wave (deep bass)
+          else if (waveIndex === 1) baseScale = 100  // Teal wave (bass)
+          else if (waveIndex === 2) baseScale = 80   // Blue wave (low-mid)
+          else if (waveIndex === 3) baseScale = 70   // Green wave (mid)
+          else baseScale = 130 // Yellow wave (bass+low-mid mix) - very high for movement
           
           audioInfluence = (sum / (endFreq - startFreq)) * baseScale
         }
@@ -278,8 +278,12 @@ export default function WaveAnimation() {
             if (freqIndex < audioData.length) {
               const freqStrength = audioData[freqIndex] || 0
               // Layer audio effect on top of base wave, don't replace it
-              // Make bass more prominent and responsive
-              const responsiveness = waveIndex === 0 ? 0.8 : 0.5 // Bass wave gets higher responsiveness
+              // Make bass frequencies more prominent and yellow wave very responsive
+              let responsiveness
+              if (waveIndex === 0) responsiveness = 0.8      // Red (deep bass)
+              else if (waveIndex === 4) responsiveness = 0.9 // Yellow (bass mix) - highest
+              else responsiveness = 0.5                      // Others
+              
               y += freqStrength * audioInfluence * Math.sin(time * 0.05 + x * 0.02) * responsiveness
             }
           }
@@ -348,7 +352,7 @@ export default function WaveAnimation() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [audioData, isPlaying])
+  }, [])
 
   return (
     <div className="w-full h-full">
