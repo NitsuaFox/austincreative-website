@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import WaveAnimation from '../components/WaveAnimation'
+import ProjectList from '../components/ProjectList'
 
 export default function Home() {
   return (
@@ -45,95 +46,7 @@ export default function Home() {
       </div>
       
       {/* Projects */}
-      <div id="projects" className="mb-12">
-        {/* Headers - Desktop */}
-        <div className="hidden md:grid grid-cols-5 gap-4 p-4 border-b-2 border-gray-600 font-semibold text-white">
-          <div>Title</div>
-          <div>Category</div>
-          <div>Description</div>
-          <div>Date Added</div>
-          <div>URL</div>
-        </div>
-        
-        {/* Headers - Mobile */}
-        <div className="md:hidden grid grid-cols-4 gap-4 p-4 border-b-2 border-gray-600 font-semibold text-white">
-          <div>Title</div>
-          <div>Category</div>
-          <div>Date</div>
-          <div>URL</div>
-        </div>
-        
-        {/* Project List */}
-        <div className="space-y-0">
-          {/* Desktop Layout */}
-          <div className="hidden md:grid grid-cols-5 gap-4 p-4 border-b border-gray-700">
-            <div className="font-semibold text-white">Blockfall</div>
-            <div className="text-gray-400">Game</div>
-            <div className="text-gray-400">Puzzle game</div>
-            <div className="text-gray-400">2nd July 2025</div>
-            <div>
-              <a 
-                href="https://blockfall.austincreative.uk" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-400 transition-colors"
-              >
-                Visit →
-              </a>
-            </div>
-          </div>
-          
-          <div className="hidden md:grid grid-cols-5 gap-4 p-4 border-b border-gray-700">
-            <div className="font-semibold text-white">Island Maths</div>
-            <div className="text-gray-400">Game</div>
-            <div className="text-gray-400">Educational math game</div>
-            <div className="text-gray-400">June 2023</div>
-            <div>
-              <a 
-                href="https://philipaustin.itch.io/island-maths" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-400 transition-colors"
-              >
-                Visit →
-              </a>
-            </div>
-          </div>
-          
-          {/* Mobile Layout */}
-          <div className="md:hidden grid grid-cols-4 gap-4 p-4 border-b border-gray-700">
-            <div className="font-semibold text-white">Blockfall</div>
-            <div className="text-gray-400">Game</div>
-            <div className="text-gray-400 text-sm">2nd July 2025</div>
-            <div>
-              <a 
-                href="https://blockfall.austincreative.uk" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-400 transition-colors"
-              >
-                Visit →
-              </a>
-            </div>
-          </div>
-          
-          <div className="md:hidden grid grid-cols-4 gap-4 p-4 border-b border-gray-700">
-            <div className="font-semibold text-white">Island Maths</div>
-            <div className="text-gray-400">Game</div>
-            <div className="text-gray-400 text-sm">June 2023</div>
-            <div>
-              <a 
-                href="https://philipaustin.itch.io/island-maths" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-400 transition-colors"
-              >
-                Visit →
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProjectList />
       
         {/* Links */}
         <div id="contact" className="text-center">
