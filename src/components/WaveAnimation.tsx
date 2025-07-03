@@ -285,8 +285,16 @@ export default function WaveAnimation() {
               // Layer audio effect on top of base wave, don't replace it
               // Make bass more prominent and responsive
               const responsiveness = waveIndex === 0 ? 0.8 : 0.5 // Bass wave gets higher responsiveness
-              // Use smoother sine wave modulation to avoid harsh transitions - increase sensitivity
-              const audioEffect = smoothFreqStrength * audioInfluence * Math.sin(time * 0.02 + x * 0.005) * responsiveness * 0.6
+              // Guitar string vibration simulation - multiple harmonics and faster oscillation
+              const fundamental = Math.sin(time * 0.1 + x * 0.01) // Main frequency
+              const harmonic1 = Math.sin(time * 0.2 + x * 0.02) * 0.5 // First harmonic
+              const harmonic2 = Math.sin(time * 0.3 + x * 0.03) * 0.25 // Second harmonic
+              const stringVibration = fundamental + harmonic1 + harmonic2
+              
+              // Add tremolo effect for more guitar-like behavior
+              const tremolo = Math.sin(time * 0.05) * 0.3 + 0.7
+              
+              const audioEffect = smoothFreqStrength * audioInfluence * stringVibration * tremolo * responsiveness * 0.8
               y += audioEffect
             }
           }
