@@ -17,6 +17,13 @@ const songs: Song[] = [
     remixed: true,
     date: "1st June 2011",
     filename: "truelove.mp3"
+  },
+  {
+    title: "Spanish Girl",
+    artist: "Philip Austin feat. Mark Guthrie",
+    remixed: true,
+    date: "1st June 2025",
+    filename: "spanishgirl.mp3"
   }
 ]
 
