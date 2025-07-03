@@ -2,10 +2,20 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+interface Pluck {
+  x: number
+  waveIndex: number
+  amplitude: number
+  time: number
+  decay: number
+}
+
 export default function WaveAnimation() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number>()
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, isOver: false })
+  const plucksRef = useRef<Pluck[]>([])
+  const lastMousePos = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -24,23 +34,6 @@ export default function WaveAnimation() {
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 
-    // Mouse tracking
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect()
-      setMousePos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-        isOver: true
-      })
-    }
-
-    const handleMouseLeave = () => {
-      setMousePos(prev => ({ ...prev, isOver: false }))
-    }
-
-    canvas.addEventListener('mousemove', handleMouseMove)
-    canvas.addEventListener('mouseleave', handleMouseLeave)
-
     // Wave parameters
     let time = 0
     const speed = 0.03
@@ -54,6 +47,56 @@ export default function WaveAnimation() {
       { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9 }
     ]
 
+    // Mouse tracking with pluck detection
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      const newMousePos = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        isOver: true
+      }
+      
+      // Detect when cursor crosses through wave lines
+      if (mousePos.isOver) {
+        const mouseDelta = Math.abs(newMousePos.x - lastMousePos.current.x)
+        const mouseSpeed = mouseDelta
+        
+        // Only pluck if mouse is moving with some speed
+        if (mouseSpeed > 2) {
+          waves.forEach((wave, waveIndex) => {
+            // Calculate where this wave would be at mouse X position
+            const waveY = canvas.offsetHeight / 2 + 
+                         wave.amplitude * Math.sin(wave.frequency * newMousePos.x + wave.offset) * 
+                         Math.sin(time * speed + wave.offset)
+            
+            // Check if cursor is near this wave line
+            const distanceToWave = Math.abs(newMousePos.y - waveY)
+            
+            if (distanceToWave < 15) { // Close enough to "pluck"
+              // Create a pluck effect
+              plucksRef.current.push({
+                x: newMousePos.x,
+                waveIndex,
+                amplitude: (mouseSpeed * 0.5 + 10) * wave.sensitivity,
+                time: 0,
+                decay: 0.95
+              })
+            }
+          })
+        }
+      }
+      
+      lastMousePos.current = { x: newMousePos.x, y: newMousePos.y }
+      setMousePos(newMousePos)
+    }
+
+    const handleMouseLeave = () => {
+      setMousePos(prev => ({ ...prev, isOver: false }))
+    }
+
+    canvas.addEventListener('mousemove', handleMouseMove)
+    canvas.addEventListener('mouseleave', handleMouseLeave)
+
     const animate = () => {
       const width = canvas.offsetWidth
       const height = canvas.offsetHeight
@@ -61,35 +104,44 @@ export default function WaveAnimation() {
       // Clear canvas
       ctx.clearRect(0, 0, width, height)
       
+      // Update and clean up plucks
+      plucksRef.current = plucksRef.current.filter(pluck => {
+        pluck.time += 1
+        pluck.amplitude *= pluck.decay
+        return pluck.amplitude > 0.5 // Remove very small plucks
+      })
+      
       // Draw multiple wave layers
-      waves.forEach((wave, index) => {
+      waves.forEach((wave, waveIndex) => {
         ctx.beginPath()
         ctx.strokeStyle = wave.color
         ctx.globalAlpha = wave.opacity
-        ctx.lineWidth = 2 + index * 0.5
+        ctx.lineWidth = 2 + waveIndex * 0.5
         ctx.lineCap = 'round'
         
-        // Create smooth wave with mouse interaction
+        // Create smooth wave with pluck effects
         for (let x = 0; x <= width; x += 2) {
           let y = height / 2 + 
                   wave.amplitude * Math.sin(wave.frequency * x + wave.offset) * 
                   Math.sin(time * speed + wave.offset)
           
-          // Mouse influence
-          if (mousePos.isOver) {
-            const distanceToMouse = Math.abs(x - mousePos.x)
-            const maxInfluence = 150 // pixels
-            
-            if (distanceToMouse < maxInfluence) {
-              const influence = (maxInfluence - distanceToMouse) / maxInfluence
-              const mouseInfluence = (mousePos.y - height / 2) * influence * wave.sensitivity * 0.3
+          // Apply pluck effects for this wave
+          plucksRef.current.forEach(pluck => {
+            if (pluck.waveIndex === waveIndex) {
+              const distanceFromPluck = Math.abs(x - pluck.x)
+              const maxDistance = 100
               
-              // Add some ripple effect
-              const ripple = Math.sin(distanceToMouse * 0.1 - time * 0.1) * influence * 10
-              
-              y += mouseInfluence + ripple
+              if (distanceFromPluck < maxDistance) {
+                // Guitar string vibration: oscillation that decays with distance and time
+                const influence = (maxDistance - distanceFromPluck) / maxDistance
+                const vibration = pluck.amplitude * influence * 
+                                Math.sin(pluck.time * 0.3) * 
+                                Math.exp(-distanceFromPluck * 0.02) // Exponential decay with distance
+                
+                y += vibration
+              }
             }
-          }
+          })
           
           if (x === 0) {
             ctx.moveTo(x, y)
@@ -100,19 +152,6 @@ export default function WaveAnimation() {
         
         ctx.stroke()
       })
-      
-      // Draw mouse interaction indicator (subtle glow)
-      if (mousePos.isOver) {
-        const gradient = ctx.createRadialGradient(
-          mousePos.x, mousePos.y, 0,
-          mousePos.x, mousePos.y, 50
-        )
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)')
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
-        
-        ctx.fillStyle = gradient
-        ctx.fillRect(mousePos.x - 50, mousePos.y - 50, 100, 100)
-      }
       
       // Reset alpha
       ctx.globalAlpha = 1
@@ -139,7 +178,7 @@ export default function WaveAnimation() {
     <div className="w-full h-20 my-8">
       <canvas
         ref={canvasRef}
-        className="w-full h-full cursor-none"
+        className="w-full h-full"
         style={{ width: '100%', height: '100%' }}
       />
     </div>
