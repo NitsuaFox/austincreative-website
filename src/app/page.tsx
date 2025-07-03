@@ -21,9 +21,9 @@ export default function Home() {
           
           {/* Menu - Right */}
           <div className="flex space-x-8">
-            <a href="#projects" className="text-white hover:text-gray-400 transition-colors">Projects</a>
-            <a href="/about" className="text-white hover:text-gray-400 transition-colors">About</a>
-            <a href="#contact" className="text-white hover:text-gray-400 transition-colors">Contact</a>
+            <a href="#projects" className="text-white hover:text-gray-400 transition-colors">PROJECTS</a>
+            <a href="/about" className="text-white hover:text-gray-400 transition-colors">ABOUT</a>
+            <a href="#contact" className="text-white hover:text-gray-400 transition-colors">CONTACT</a>
           </div>
         </nav>
         
