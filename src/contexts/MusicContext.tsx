@@ -13,6 +13,7 @@ interface MusicContextType {
   isPlaying: boolean
   progress: number
   duration: number
+  audioData: number[]
   playSong: (song: Song) => void
   pauseSong: () => void
   resumeSong: () => void
@@ -27,7 +28,12 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
+  const [audioData, setAudioData] = useState<number[]>(new Array(32).fill(0))
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const analyserRef = useRef<AnalyserNode | null>(null)
+  const audioContextRef = useRef<AudioContext | null>(null)
+  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null)
+  const animationRef = useRef<number>()
 
   useEffect(() => {
     const audio = audioRef.current
@@ -68,6 +74,45 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     setIsPlaying(true)
     setProgress(0)
     
+    // Set up Web Audio API for frequency analysis
+    try {
+      if (!audioContextRef.current) {
+        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      }
+      
+      if (!analyserRef.current) {
+        analyserRef.current = audioContextRef.current.createAnalyser()
+        analyserRef.current.fftSize = 64 // 32 frequency bins
+        analyserRef.current.smoothingTimeConstant = 0.8
+      }
+      
+      // Create source and connect to analyser
+      if (sourceRef.current) {
+        sourceRef.current.disconnect()
+      }
+      sourceRef.current = audioContextRef.current.createMediaElementSource(audio)
+      sourceRef.current.connect(analyserRef.current)
+      analyserRef.current.connect(audioContextRef.current.destination)
+      
+      // Start frequency data animation
+      const updateFrequencyData = () => {
+        if (analyserRef.current && isPlaying) {
+          const bufferLength = analyserRef.current.frequencyBinCount
+          const dataArray = new Uint8Array(bufferLength)
+          analyserRef.current.getByteFrequencyData(dataArray)
+          
+          // Convert to normalized array (0-1) and smooth the data
+          const normalizedData = Array.from(dataArray).map(value => value / 255)
+          setAudioData(normalizedData)
+          
+          animationRef.current = requestAnimationFrame(updateFrequencyData)
+        }
+      }
+      updateFrequencyData()
+    } catch (error) {
+      console.error('Web Audio API setup failed:', error)
+    }
+    
     audio.play().catch(console.error)
   }
 
@@ -76,12 +121,30 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       audioRef.current.pause()
       setIsPlaying(false)
     }
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current)
+    }
   }
 
   const resumeSong = () => {
     if (audioRef.current && currentSong) {
       audioRef.current.play().catch(console.error)
       setIsPlaying(true)
+      
+      // Resume frequency data animation
+      const updateFrequencyData = () => {
+        if (analyserRef.current && isPlaying) {
+          const bufferLength = analyserRef.current.frequencyBinCount
+          const dataArray = new Uint8Array(bufferLength)
+          analyserRef.current.getByteFrequencyData(dataArray)
+          
+          const normalizedData = Array.from(dataArray).map(value => value / 255)
+          setAudioData(normalizedData)
+          
+          animationRef.current = requestAnimationFrame(updateFrequencyData)
+        }
+      }
+      updateFrequencyData()
     }
   }
 
@@ -94,6 +157,11 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     setIsPlaying(false)
     setProgress(0)
     setDuration(0)
+    setAudioData(new Array(32).fill(0))
+    
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current)
+    }
   }
 
   const seekTo = (time: number) => {
@@ -109,6 +177,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       isPlaying,
       progress,
       duration,
+      audioData,
       playSong,
       pauseSong,
       resumeSong,

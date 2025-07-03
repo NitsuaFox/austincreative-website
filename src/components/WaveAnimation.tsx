@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useMusic } from '../contexts/MusicContext'
 
 interface Pluck {
   x: number
@@ -27,6 +28,7 @@ export default function WaveAnimation() {
   const plucksRef = useRef<Pluck[]>([])
   const dotsRef = useRef<Dot[]>([])
   const lastMousePos = useRef({ x: 0, y: 0 })
+  const { audioData, isPlaying } = useMusic()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -51,11 +53,11 @@ export default function WaveAnimation() {
 
     // Multiple wave layers with different colors and properties
     const waves = [
-      { amplitude: 12, frequency: 0.02, color: '#FF6B6B', opacity: 0.7, offset: 0, sensitivity: 1.2 },
-      { amplitude: 8, frequency: 0.025, color: '#4ECDC4', opacity: 0.6, offset: Math.PI / 3, sensitivity: 0.8 },
-      { amplitude: 15, frequency: 0.015, color: '#45B7D1', opacity: 0.5, offset: Math.PI / 2, sensitivity: 1.5 },
-      { amplitude: 10, frequency: 0.03, color: '#96CEB4', opacity: 0.6, offset: Math.PI, sensitivity: 1.0 },
-      { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9 }
+      { amplitude: 12, frequency: 0.02, color: '#FF6B6B', opacity: 0.7, offset: 0, sensitivity: 1.2, freqRange: [0, 4] },
+      { amplitude: 8, frequency: 0.025, color: '#4ECDC4', opacity: 0.6, offset: Math.PI / 3, sensitivity: 0.8, freqRange: [4, 8] },
+      { amplitude: 15, frequency: 0.015, color: '#45B7D1', opacity: 0.5, offset: Math.PI / 2, sensitivity: 1.5, freqRange: [8, 16] },
+      { amplitude: 10, frequency: 0.03, color: '#96CEB4', opacity: 0.6, offset: Math.PI, sensitivity: 1.0, freqRange: [16, 24] },
+      { amplitude: 6, frequency: 0.035, color: '#FFEAA7', opacity: 0.8, offset: Math.PI * 1.5, sensitivity: 0.9, freqRange: [24, 32] }
     ]
 
     // Mouse tracking with pluck detection
@@ -233,11 +235,32 @@ export default function WaveAnimation() {
         ctx.lineWidth = 2 + waveIndex * 0.5
         ctx.lineCap = 'round'
         
-        // Create smooth wave with pluck effects
+        // Calculate audio influence for this wave based on its frequency range
+        let audioInfluence = 0
+        if (isPlaying && audioData.length > 0) {
+          const [startFreq, endFreq] = wave.freqRange
+          let sum = 0
+          for (let i = startFreq; i < Math.min(endFreq, audioData.length); i++) {
+            sum += audioData[i]
+          }
+          audioInfluence = sum / (endFreq - startFreq) * 30 // Scale the influence
+        }
+        
+        // Create smooth wave with pluck effects and audio reactivity
         for (let x = 0; x <= width; x += 2) {
           let y = height / 2 + 
                   wave.amplitude * Math.sin(wave.frequency * x + wave.offset) * 
                   Math.sin(time * speed + wave.offset)
+          
+          // Add audio reactivity - make each frequency band affect different parts of the wave
+          if (audioInfluence > 0) {
+            const freqPosition = (x / width) * (wave.freqRange[1] - wave.freqRange[0]) + wave.freqRange[0]
+            const freqIndex = Math.floor(freqPosition)
+            if (freqIndex < audioData.length) {
+              const freqStrength = audioData[freqIndex] || 0
+              y += freqStrength * audioInfluence * Math.sin(time * 0.1 + x * 0.01)
+            }
+          }
           
           // Apply pluck effects for this wave
           plucksRef.current.forEach(pluck => {
